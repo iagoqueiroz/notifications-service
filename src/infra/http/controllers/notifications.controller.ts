@@ -1,7 +1,9 @@
 import { CreateNotification } from '@application/use-cases/create-notification';
 import { GetRecipientNotifications } from '@application/use-cases/get-recipient-notifications';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { ReadNotification } from '@application/use-cases/read-notification';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateNotificationDto } from '../dtos/create-notification.dto';
+import { NotificationIdParam } from '../params/notification-id-param';
 import { RecipientIdParam } from '../params/recipient-id-param';
 import { NotificationViewModel } from '../view-models/notification-view-model';
 
@@ -10,6 +12,7 @@ export class NotificationsController {
   constructor(
     private createNotification: CreateNotification,
     private getRecipientNotifications: GetRecipientNotifications,
+    private readNotification: ReadNotification,
   ) {}
 
   @Post()
@@ -26,5 +29,12 @@ export class NotificationsController {
     });
 
     return { notifications: notifications.map(NotificationViewModel.toHTTP) };
+  }
+
+  @Patch(':notificationId/read')
+  async readNotificationFromId(
+    @Param() { notificationId }: NotificationIdParam,
+  ) {
+    await this.readNotification.execute({ notificationId });
   }
 }

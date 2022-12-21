@@ -23,4 +23,27 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
 
     return notifications.map(PrismaNotificationMapper.toDomain);
   }
+
+  async findById(notificationId: string): Promise<Notification | null> {
+    const notification = await this.prisma.notification.findUnique({
+      where: {
+        id: notificationId,
+      },
+    });
+
+    if (!notification) {
+      return null;
+    }
+
+    return PrismaNotificationMapper.toDomain(notification);
+  }
+
+  async save(notification: Notification): Promise<void> {
+    await this.prisma.notification.update({
+      where: {
+        id: notification.id,
+      },
+      data: PrismaNotificationMapper.toPrisma(notification),
+    });
+  }
 }
