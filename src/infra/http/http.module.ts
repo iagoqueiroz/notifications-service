@@ -1,3 +1,4 @@
+import { CancelNotification } from '@application/use-cases/cancel-notification';
 import { CreateNotification } from '@application/use-cases/create-notification';
 import { GetRecipientNotifications } from '@application/use-cases/get-recipient-notifications';
 import { ReadNotification } from '@application/use-cases/read-notification';
@@ -14,6 +15,7 @@ import { NotificationsController } from './controllers/notifications.controller'
     GetRecipientNotifications,
     ReadNotification,
     UnreadNotification,
+    CancelNotification,
   ],
 })
 export class HttpModule {}
