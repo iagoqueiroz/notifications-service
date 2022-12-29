@@ -2,13 +2,11 @@ version: '3.9'
 services:
   api:
     container_name: notification-api
-    restart: always
+    restart: unless-stopped
     build:
       dockerfile: Dockerfile
       context: .
       target: development
-    environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
     volumes:
       - ./:/app
       - /app/node_modules
@@ -23,7 +21,7 @@ services:
   postgres:
     container_name: notification-postgres
     image: postgres
-    restart: always
+    restart: unless-stopped
     volumes:
       - postgres-data:/var/lib/postgres/data
     ports:

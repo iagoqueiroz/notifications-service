@@ -1,5 +1,7 @@
 FROM node:18-slim as development
 
+RUN mkdir -p /app/node_modules && chown -R node:node /app/node_modules
+
 RUN apt-get update && apt-get upgrade
 RUN apt-get install openssl
 
