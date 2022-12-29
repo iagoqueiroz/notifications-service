@@ -1,5 +1,5 @@
 Dockerfile
 .dockerignore
 npm-debug.log
-node_modeles/
+node_modules/
 dist/

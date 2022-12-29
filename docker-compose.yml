@@ -7,8 +7,11 @@ services:
       dockerfile: Dockerfile
       context: .
       target: development
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
     volumes:
-      - .:/app
+      - ./:/app
+      - /app/node_modules
     ports:
       - 3000:3000
     env_file:
